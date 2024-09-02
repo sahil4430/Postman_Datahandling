@@ -1,6 +1,6 @@
 const express= require('express')
 const mongoose = require('mongoose')
-const fs = require(fs)
+const fs = require('fs')
 const Users = require("./user.json")
 const Port =8000
 const app=express();
@@ -15,7 +15,10 @@ app.get('/user', (req, res) => {
 app.post('/user',(req, res)=>{
     const body= req.body;
     console.log(body)
-    return res.json({status:"pending"})
+    Users.push(body);
+    fs.writeFile("./user.json", JSON.stringify(Users),(err,data)=>{
+        return res.json({status:"pending"})
+    })
 });
 mongoose
 .connect('mongodb://127.0.0.1:27017/test1')
